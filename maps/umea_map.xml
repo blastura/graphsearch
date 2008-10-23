@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<map>
+	<node id="Teg" x="1720099" y="7072732">
+		<road to="Rondellen" speed="50" />
+		<road to="Tegsbron" speed="110" />
+	</node>
+	<node id="Tegsbron" x="1720359" y="7074215">
+		<road to="Teg" speed="110" />
+		<road to="I20" speed="50" />
+	</node>
+	<node id="TreKorvar" x="1721857" y="7072464">
+		<road to="Rondellen" speed="30" />
+		<road to="On" speed="30" />
+		<road to="Flygplatsen" speed="70" />
+	</node>
+	<node id="Rondellen" x="1721108" y="7073218">
+		<road to="Teg" speed="50" />
+		<road to="Kyrkan" speed="70" />
+		<road to="TreKorvar" speed="30" />
+	</node>
+	<node id="On" x="1722861" y="7072725">
+		<road to="TreKorvar" speed="30" />
+	</node>
+	<node id="Flygplatsen" x="1722354" y="7071731">
+		<road to="TreKorvar" speed="70" />
+	</node>
+	<node id="GimonAs" x="1724103" y="7071728">
+		<road to="Sofiehem" speed="70" />
+		<road to="Ok" speed="70" />
+	</node>
+	<node id="Sofiehem" x="1723346" y="7073227">
+		<road to="GimonAs" speed="70" />
+		<road to="Alidhem" speed="50" />
+		<road to="NUS" speed="70" />
+	</node>
+	<node id="Alidhem" x="1724359" y="7073470">
+		<road to="Sofiehem" speed="50" />
+		<road to="Ok" speed="50" />
+		<road to="MIT" speed="50" />
+	</node>
+	<node id="Ok" x="1725848" y="7073477">
+		<road to="Alidhem" speed="50" />
+		<road to="Nydala" speed="70" />
+	</node>
+	<node id="MIT" x="1724345" y="7074467">
+		<road to="Alidhem" speed="50" />
+		<road to="Berghem" speed="30" />
+		<road to="Nydala" speed="50" />
+	</node>
+	<node id="Gamlia" x="1723108" y="7074731">
+		<road to="Station" speed="30" />
+		<road to="Berghem" speed="50" />
+		<road to="NUS" speed="70" />
+	</node>
+	<node id="NUS" x="1723104" y="7074222">
+		<road to="Kyrkan" speed="50" />
+		<road to="Gamlia" speed="70" />
+		<road to="Sofiehem" speed="70" />
+	</node>
+	<node id="Kyrkan" x="1721596" y="7074215">
+		<road to="Rondellen" speed="70" />
+		<road to="Station" speed="50" />
+		<road to="NUS" speed="50" />
+	</node>
+	<node id="I20" x="1721095" y="7075464">
+		<road to="Tegsbron" speed="50" />
+		<road to="Obs" speed="90" />
+		<road to="Station" speed="50" />
+	</node>
+	<node id="Station" x="1722105" y="7075217">
+		<road to="I20" speed="50" />
+		<road to="Obs" speed="50" />
+		<road to="Gamlia" speed="30" />
+	</node>
+	<node id="Berghem" x="1724099" y="7075217">
+		<road to="Gamlia" speed="50" />
+		<road to="Mariehem" speed="70" />
+		<road to="MIT" speed="30" />
+	</node>
+	<node id="Nydala" x="1726109" y="7074219">
+		<road to="MIT" speed="50" />
+		<road to="Mariehem" speed="70" />
+		<road to="Ok" speed="70" />
+	</node>
+	<node id="Mariehem" x="1726348" y="7076228">
+		<road to="Berghem" speed="70" />
+		<road to="Foa" speed="70" />
+		<road to="Nydala" speed="70" />
+	</node>
+	<node id="Foa" x="1726611" y="7078226">
+		<road to="Obs" speed="90" />
+		<road to="Begbilar" speed="70" />
+		<road to="Mariehem" speed="70" />
+	</node>
+	<node id="Obs" x="1723101" y="7078229">
+		<road to="I20" speed="90" />
+		<road to="Begbilar" speed="50" />
+		<road to="Foa" speed="90" />
+	</node>
+	<node id="Begbilar" x="1726850" y="7079228">
+		<road to="Obs" speed="50" />
+		<road to="Foa" speed="70" />
+	</node>
+</map>
