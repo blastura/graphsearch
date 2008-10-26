@@ -5,10 +5,6 @@ import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Enumeration;
 import org.jdom.*;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Color;
-import javax.swing.Timer;
 import java.util.logging.Logger;
 
 /**
@@ -21,7 +17,6 @@ import java.util.logging.Logger;
  */
 public class MySearcher extends MapSearcher {
    private Graph map;
-   private Graphics2D g2;
    private dGraphWriter graphWriter;
    private boolean halt;
    private boolean running;
@@ -283,13 +278,14 @@ public class MySearcher extends MapSearcher {
          GraphNode n = queue.removeFirst();
          n.visit();
 
-         waitForClickDrawNode(n);
-
          expandedNodes += n.getName() + (n == map.getNode(to) ? "" : ", ");
 
          //   * If the searched element is found in this node, quit
          //   * the search and return a result.
          if (n.getName().equals(to)) {
+            
+            waitForClickDrawNode(n);
+            
             pathToGoal = n.getName(); // Goal
             n = n.getParent();
 
@@ -316,6 +312,9 @@ public class MySearcher extends MapSearcher {
                }
             }
          }
+         
+         waitForClickDrawNode(n);
+         
       }
       Logger.global.info("@ breadthFirst => Leaving");
       return "Goal not found!\n";
@@ -341,11 +340,13 @@ public class MySearcher extends MapSearcher {
          GraphNode n = stack.removeLast();
          //   * Mark this node as visited
          n.visit();
-         waitForClickDrawNode(n);
 
          //   * If the searched element is found in this node, quit
          //   * the search and return a result.
          if (n.getName().equals(to)) {
+            
+            waitForClickDrawNode(n);
+            
             expandedNodes += n.getName();
             pathToGoal = n.getName(); // Goal
             n = n.getParent();
@@ -366,11 +367,15 @@ public class MySearcher extends MapSearcher {
                if (!neighbour.isVisited() && !stack.contains(neighbour)) {
                   neighbour.setParent(n);
                   stack.add(neighbour);
+                  
+                  drawParentArrows(neighbour, n);
+                  
                }
             }
          }
          expandedNodes += n.getName() + ", ";
          Logger.global.info("Stack: \n " + stack);
+         waitForClickDrawNode(n);
       }
       Logger.global.info("@ depthFirst => Leaving depthFirst algorithm");
       return "Goal not found!\n";

@@ -22,7 +22,7 @@
   </target>
 
   <target name="compile" depends="prepare">
-    <javac srcdir="${src.dir}" destdir="${build.prod.dir}">
+    <javac srcdir="${src.dir}" destdir="${build.prod.dir}" debug="on">
       <classpath refid="project.classpath" />
       <!-- <compilerarg value="-Xlint:unchecked"/> -->
     </javac>

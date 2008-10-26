@@ -1,22 +1,32 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
-import java.util.logging.Level;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+/**
+ * TODO, fix this description. 
+ *
+ * @author anton.johansson@gmail.com
+ * @version 1.0
+ */
 public class dGraphController {
    private dGraphWriter p;
    private dRadioWriter radioWriter;
 
 
+   /**
+    * Creates a new dGraphController instance.
+    *
+    */
    public dGraphController() {
       try {
          // Make look and feel, system specific
@@ -33,8 +43,8 @@ public class dGraphController {
       p.setSize(windowSize, windowSize+fringe);
       // Mouseclick, Continue algorithm
       p.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent e) {
-               dGraphWriter c = (dGraphWriter)e.getSource();
                if (!p.isRunning()) {
                   Logger.global.info("Algoritm is not running");
                   p.terminateSearch();
@@ -71,7 +81,7 @@ public class dGraphController {
             }
          });
       graphPanel.add(btClear, BorderLayout.SOUTH);
-
+      
       // Frame
       JFrame graphFrame = new JFrame("GraphSearcher");
       graphFrame.getContentPane().add(graphPanel);
@@ -86,6 +96,11 @@ public class dGraphController {
                     "Tegsbron", "Nydala");
    }
 
+   /**
+    * Starts the UI.
+    *
+    * @param args no parameter is used.
+    */
    public static void main(String[] args) {
       Logger.global.setLevel(Level.ALL);
       new dGraphController();

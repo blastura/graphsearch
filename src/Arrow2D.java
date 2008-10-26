@@ -5,22 +5,20 @@ import java.awt.geom.Line2D;
 import java.awt.Graphics2D;
 
 public class Arrow2D {
-   private Graphics2D g2;
    private double x1;
    private double y1;
    private double x2;
    private double y2;
 
-   public Arrow2D(Graphics2D g2, double x1, double y1, double x2, double y2) {
-      this.g2 = g2;
+   public Arrow2D(double x1, double y1, double x2, double y2) {
       this.x1 = x1;
       this.y1 = y1;
       this.x2 = x2;
-      this.y1 = y2;
+      this.y2 = y2;
    }
 
    // Implementing Shape with PathIterator seems tough.
-   public void draw(double x1, double y1, double x2, double y2) {
+   public void draw(Graphics2D g2) {
       g2.draw(new Line2D.Double(x1, y1, x2, y2));
       double angle = calculateAngle(x1, y1, x2, y2);
 
@@ -46,7 +44,7 @@ public class Arrow2D {
     * @return angle form the poisitive/right horisontal axis to end
     * point.
     */
-   public static double calculateAngle(double x1, double y1,
+   private static double calculateAngle(double x1, double y1,
                                        double x2, double y2) {
       double dx = x2 - x1;
       double dy = y2 - y1;
