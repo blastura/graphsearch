@@ -1,25 +1,13 @@
-
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.io.File;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JComponent;
 
 /**
@@ -111,71 +99,6 @@ public class dGraphWriter extends JComponent {
          }).start();
    }
 
-   public void drawArrow(double x1, double y1, double x2, double y2) {
-      g2.draw(new Line2D.Double(x1, y1, x2, y2));
-      double angle = calculateAngle(x1, y1, x2, y2);
-
-      double arcWidth = 45.0;
-      double arcWidthHeight = 15.0;
-      double initialAngle = 180-45.0/2.0;
-      Arc2D.Double arc = new Arc2D.Double();
-      arc.setArcByCenter(x2, y2, arcWidthHeight, initialAngle,
-                         arcWidth, Arc2D.PIE);
-
-      AffineTransform tx = AffineTransform.getRotateInstance(angle, x2, y2);
-      Shape trArc = tx.createTransformedShape((Arc2D.Double) arc);
-      g2.fill(trArc);
-   }
-
-   /**
-    * Caculate angle between start point and endpoint.
-    *
-    * @param x1 x coordinate of start-point
-    * @param y1 y coordinate of start-point
-    * @param x2 x coordinate of end-point
-    * @param y2 y coordinate of end point
-    * @return angle form the poisitive/right horisontal axis to end
-    * point.
-    */
-   public static double calculateAngle(double x1, double y1,
-                                       double x2, double y2) {
-      double dx = x2 - x1;
-      double dy = y2 - y1;
-      double angle = 0.0; // Horisontal to the right
-
-      if (dx == 0.0) { // Vertical
-         if (dy == 0.0) { // No angle
-            angle = 0.0;
-         }
-         else if (dy > 0.0) { // Points vertical up
-            angle = Math.PI/2.0;
-         }
-         else {// dy < 0, Points down
-            angle = Math.PI/2.0*3.0;
-         }
-      }
-      else if (dy == 0.0) { // Horisontal
-         if (dx > 0.0) { // Points right
-            angle = 0.0;
-         }
-         else { // dx < 0.0 Points left
-            angle = Math.PI;
-         }
-      }
-      else {
-         if (dx < 0.0) { // Points (up and left) or (down and left)
-            angle = Math.atan(dy/dx) + Math.PI;
-         }
-         else if (dy < 0.0) { // Points down and right
-            angle = Math.atan(dy/dx) + 2 * Math.PI;
-         }
-         else {
-            angle = Math.atan(dy/dx);
-         }
-      }
-      return angle;
-   }
-
    public void setNodes() {
       Logger.global.info("@ => setNode, fringe = " + fringe);
       Logger.global.info("@ => setNode, width = " + width);
@@ -230,9 +153,10 @@ public class dGraphWriter extends JComponent {
               e.hasMoreElements();) {
             GraphNode neighbour = e.nextElement();
             g2.setColor(Color.black);
-            drawArrow(posX, posY,
-                      getXPos(neighbour.getX()),
-                      getYPos(neighbour.getY()));
+            Arrow2D arrow = new Arrow2D(posX, posY,
+                                        getXPos(neighbour.getX()),
+                                        getYPos(neighbour.getY()));
+            arrow.draw(g2);
          }
          g2.setColor(Color.green); // Node color
 
@@ -258,21 +182,37 @@ public class dGraphWriter extends JComponent {
    }
    
    public void addParentArrow(int x1, int y1, int x2, int y2) {
-      //parentArrows.add(new Arrow2D(x1, y1, x1, y2));
+      double xPos1 = getXPos( x1 );
+      double yPos1 = getYPos( y1 );
+      double xPos2 = getXPos( x2 );
+      double yPos2 = getYPos( y2 );
+      
+      Arrow2D arrow = new Arrow2D(xPos1, yPos1, xPos2, yPos2);
+      parentArrows.add(arrow);
    }
 
    public void update(Graphics g) {
       Logger.global.info("@ => update in dGraphWriter");
       Graphics2D g2 = (Graphics2D) g;
+      
+      // Draw visited nodes
       g2.setColor(Color.red);
       for (Ellipse2D.Double ellipse : visitedNodes) {
          g2.fill(ellipse);
+      }
+
+      // Draw parentArrows
+      g2.setColor(Color.blue);
+      for (Arrow2D parentArrow : parentArrows) {
+         Logger.global.info("drawing parentArrow");
+         parentArrow.draw(g2);
       }
    }
 
    public void terminateSearch() {
       Logger.global.info("@ => terminateSearch");
       this.visitedNodes.removeAllElements();
+      this.parentArrows.removeAllElements();
       //this.nodes.clear();
       // FIX restart of excecution
       my.step(); // Release algo from Thread.sleep
