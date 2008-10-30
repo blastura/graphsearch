@@ -116,15 +116,12 @@ public class dGraphWriter extends JComponent {
    }
 
    public double getXPos(double x) {
-      return (double) (x - xMin)
-         / (double)(xMax - xMin)
-         * width + fringe;
+      return  (x - xMin) / (xMax - xMin) * width + fringe;
    }
 
    public double getYPos(double y) {
-      return (double) (y - yMax)
-         / (double)(xMin - xMax) //flip map (xMax - xMin)
-         * height + fringe;
+         //flip map (xMax - xMin)
+      return (y - yMax) / (xMin - xMax) * height + fringe;
    }
 
    /**
@@ -155,7 +152,8 @@ public class dGraphWriter extends JComponent {
             g2.setColor(Color.black);
             Arrow2D arrow = new Arrow2D(posX, posY,
                                         getXPos(neighbour.getX()),
-                                        getYPos(neighbour.getY()));
+                                        getYPos(neighbour.getY()),
+                                        nodeDiamter/2);
             arrow.draw(g2);
          }
          g2.setColor(Color.green); // Node color
@@ -187,7 +185,7 @@ public class dGraphWriter extends JComponent {
       double xPos2 = getXPos( x2 );
       double yPos2 = getYPos( y2 );
       
-      Arrow2D arrow = new Arrow2D(xPos1, yPos1, xPos2, yPos2);
+      Arrow2D arrow = new Arrow2D(xPos1, yPos1, xPos2, yPos2, nodeDiamter/2);
       parentArrows.add(arrow);
    }
 
@@ -200,7 +198,7 @@ public class dGraphWriter extends JComponent {
       for (Ellipse2D.Double ellipse : visitedNodes) {
          g2.fill(ellipse);
       }
-
+      
       // Draw parentArrows
       g2.setColor(Color.blue);
       for (Arrow2D parentArrow : parentArrows) {

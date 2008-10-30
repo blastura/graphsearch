@@ -9,28 +9,37 @@ public class Arrow2D {
    private double y1;
    private double x2;
    private double y2;
+   private double length;
 
    public Arrow2D(double x1, double y1, double x2, double y2) {
       this.x1 = x1;
       this.y1 = y1;
       this.x2 = x2;
       this.y2 = y2;
+      this.length = Math.hypot(x1-x2, y1-y2);
    }
-
+   
+   public Arrow2D(double x1, double y1, double x2, double y2, double arrowOffsetFromEnd) {
+      this(x1, y1, x2, y2);
+      this.length = this.length - arrowOffsetFromEnd;
+   }
+   
    // Implementing Shape with PathIterator seems tough.
    public void draw(Graphics2D g2) {
+      // Line pointing right
       g2.draw(new Line2D.Double(x1, y1, x2, y2));
       double angle = calculateAngle(x1, y1, x2, y2);
 
       double arcWidth = 45.0;
       double arcWidthHeight = 15.0;
-      double initialAngle = 180-45.0/2.0;
+      // Arrowhead pointing right
+      double initialAngle = 180-arcWidth/2.0;
       Arc2D.Double arc = new Arc2D.Double();
-      arc.setArcByCenter(x2, y2, arcWidthHeight, initialAngle,
+      arc.setArcByCenter(x1 + length, y1, arcWidthHeight, initialAngle,
                          arcWidth, Arc2D.PIE);
 
-      AffineTransform tx = AffineTransform.getRotateInstance(angle, x2, y2);
-      Shape trArc = tx.createTransformedShape((Arc2D.Double) arc);
+      AffineTransform tx = AffineTransform.getRotateInstance(angle, x1, y1);
+      Shape trArc = tx.createTransformedShape(arc);
       g2.fill(trArc);
    }
 
