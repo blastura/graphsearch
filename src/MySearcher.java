@@ -141,13 +141,12 @@ public class MySearcher extends MapSearcher {
          // 3. set n to be the first node in N, and remove n from N;
          n = queue.poll();
 
-         waitForClickDrawNode(n);
-
          // store expander
          expandedNodes += n.getName() + (n == map.getNode(to) ? "" : ", ");
          n.visit();
          // 4. If n is the goal node, exit and signal success;
          if (n == this.map.getNode(to)) {
+            waitForClickDrawNode(n);
             pathToGoal = n.getName(); // Goal
             n = n.getParent();
 
@@ -167,11 +166,13 @@ public class MySearcher extends MapSearcher {
             neighbour.setDistanceToGoal(map.getNode(to));
             neighbour.setEvalFuncVal(neighbour.getDistanceToGoal());
             if (!neighbour.isVisited() && !queue.contains(neighbour)) {
+               drawParentArrows(neighbour, n);
                neighbour.setParent(n);
                queue.add(neighbour);
             }
             // and return to step 2. (end of loop)
          }
+         waitForClickDrawNode(n);
       }
       // 2. ... exit and signal failure
       return "Goal not found!\n";
@@ -204,10 +205,10 @@ public class MySearcher extends MapSearcher {
          expandedNodes += n.getName() + (n == map.getNode(to) ? "" : ", ");
          n.visit();
 
-         waitForClickDrawNode(n);
-
          // 4. If n is the goal node, exit and signal success;
          if (n == this.map.getNode(to)) {
+            waitForClickDrawNode(n);
+            
             pathToGoal = n.getName(); // Goal
             n = n.getParent();
 
@@ -243,11 +244,14 @@ public class MySearcher extends MapSearcher {
             // evaluation function
             //else if (!queue.contains(neighbour)) {//&& !neighbour.isVisited()) {
             if (!neighbour.isVisited()) {
+               drawParentArrows(neighbour, n);
                neighbour.setParent(n);
                queue.add(neighbour);
                // and return to step 2. (end of loop)
             }
          }
+         Logger.global.info("----------------------- Is in node: " + n.getName());
+         waitForClickDrawNode(n);
       }
       // 2. ... exit and signal failure
       return "Goal not found!\n";
@@ -283,8 +287,7 @@ public class MySearcher extends MapSearcher {
          //   * If the searched element is found in this node, quit
          //   * the search and return a result.
          if (n.getName().equals(to)) {
-            
-            waitForClickDrawNode(n);
+            waitForClickDrawNode(n);            
             
             pathToGoal = n.getName(); // Goal
             n = n.getParent();

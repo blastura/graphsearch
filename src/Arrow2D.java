@@ -30,8 +30,8 @@ public class Arrow2D {
       g2.draw(new Line2D.Double(x1, y1, x2, y2));
       double angle = calculateAngle(x1, y1, x2, y2);
 
-      double arcWidth = 45.0;
-      double arcWidthHeight = 15.0;
+      double arcWidth = 60.0;
+      double arcWidthHeight = 10.0;
       // Arrowhead pointing right
       double initialAngle = 180-arcWidth/2.0;
       Arc2D.Double arc = new Arc2D.Double();
