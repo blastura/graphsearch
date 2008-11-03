@@ -169,7 +169,7 @@ public class dGraphWriter extends JComponent {
    }
 
    public void visitNode(int x, int y) {
-      Logger.global.info("@ => visitNode in dGraphWriter");
+      //Logger.global.info("@ => visitNode in dGraphWriter");
       double posX = getXPos(x);
       double posY = getYPos(y);
       posX -= nodeDiamter/2;
@@ -190,7 +190,7 @@ public class dGraphWriter extends JComponent {
    }
 
    public void update(Graphics g) {
-      Logger.global.info("@ => update in dGraphWriter");
+      //Logger.global.info("@ => update in dGraphWriter");
       Graphics2D g2 = (Graphics2D) g;
       
       // Draw visited nodes
@@ -202,7 +202,7 @@ public class dGraphWriter extends JComponent {
       // Draw parentArrows
       g2.setColor(Color.blue);
       for (Arrow2D parentArrow : parentArrows) {
-         Logger.global.info("drawing parentArrow");
+         //Logger.global.info("drawing parentArrow");
          parentArrow.draw(g2);
       }
    }

@@ -22,7 +22,6 @@ public class dGraphController {
    private dGraphWriter p;
    private dRadioWriter radioWriter;
 
-
    /**
     * Creates a new dGraphController instance.
     *
